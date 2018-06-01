@@ -1,2 +1,2 @@
 def hash_cords(x,y):
-    return x+"-"+y
+    return str(x)+"-"+str(y)

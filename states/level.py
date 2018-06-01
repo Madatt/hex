@@ -7,7 +7,7 @@ class Level(states.state.State):
     def __init__(self, g):
         super().__init__(g)
 
-        self.grid=entities.hexgrid.HexGrid(g, 8, 10)
+        self.grid=entities.hexgrid.HexGrid(g,200,200,64,10,8)
 
     def run(self, dt):
         pass
