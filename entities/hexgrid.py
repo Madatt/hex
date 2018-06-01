@@ -4,40 +4,35 @@ import entities.entity
 class Hex(entities.entity):
     def __init__(self,g):
         super().__init(g)
+        self.type=0
 
+    def draw(self):
+        pass
 
-
+    def loop(self,dt):
+        pass
 
 
 class HexGrid(entities.entity):
-    def __init__(self,g,w,h):
+    def __init__(self,g,**kwargs):
         super().__init(g)
 
         self._grid = []
-
-        self._width = w
-        self._height = h
-        self._grid = [[0 for x in range(w)] for y in range(h)]
-
+        self._sprites = []
         self._batch=pyglet.graphics.Batch()
 
-        self._sprites = [[None for x in range(w)] for y in range(h)]
+    def add_hex(self,x,y):
+        pass
 
-    def get(self, x, y):
-        return self._grid[y][x]
+
+    def remove_hex(self,x,y):
+        pass
+
+    def get_hex(self,x,y):
+        
 
     def draw(self):
-        for j in range(self._height):
-            for i in range(self._width):
-                if(self._sprites[j][i]==None):
-                    self._sprites[j][i]=pyglet.sprite.Sprite(self.Game.textures['hex'],batch=self._batch)
-
-                self._sprites[j][i].x=(112-2)*i+j*56
-                self._sprites[j][i].y=-(128-2)*j*3/4+500
-
-
-        self._batch.draw()
-
+        pass
 
 
     def loop(self,dt):
