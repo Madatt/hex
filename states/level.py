@@ -7,15 +7,20 @@ class Level(states.state.State):
     def __init__(self, g):
         super().__init__(g)
 
-        self.grid=entities.hexgrid.HexGrid(g,100,80,48,1,1)
+        self.grid=entities.hexgrid.HexGrid(g,100,80,48,14,8)
 
     def run(self, dt):
+
+        self.Game.view.x+=32*dt
+
         pass
 
 
     def draw(self):
-        self.Game.clear()
+
+        self.Game.draw_view_start()
         self.grid.draw()
-        self.Game.flip()
+        self.Game.draw_view_stop()
+        self.grid.draw()
 
 

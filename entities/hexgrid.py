@@ -69,6 +69,8 @@ class HexGrid(entities.entity.Entity):
             for q in range(-off,self.width-off):
                 self.add_hex(q,r)
 
+        print(self._grid)
+
     def add_hex(self,x,y):
         if self.get_hex(x,y)==None:
             hs = utils.hash_cords(x, y)
