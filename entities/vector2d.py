@@ -4,3 +4,9 @@ class Vector2D:
         self.x=x
         self.y=y
 
+    def set(self,x,y):
+        self.x = x
+        self.y = y
+
+    def __str__(self):
+        return str(self.x) + "|" +str(self.y)

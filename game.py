@@ -17,6 +17,13 @@ class Game(pyglet.window.Window):
 
         self.view=entities.vector2d.Vector2D()
 
+        self.mouse_status=[0,0,0]
+        self.mouse_status_drag=[[0,entities.vector2d.Vector2D(),entities.vector2d.Vector2D()],
+                                [0, entities.vector2d.Vector2D(), entities.vector2d.Vector2D()],
+                                [0, entities.vector2d.Vector2D(), entities.vector2d.Vector2D()]]
+        self.mouse_position=entities.vector2d.Vector2D()
+        self.mouse_position_last=entities.vector2d.Vector2D()
+
     def add_state(self, n, s):
         self._states[n] = s(self)
 
@@ -29,6 +36,7 @@ class Game(pyglet.window.Window):
             return None
 
         self._current= n
+        self._states[self._current].init()
 
     def draw_view_start(self):
         glLoadIdentity()
@@ -36,6 +44,33 @@ class Game(pyglet.window.Window):
 
     def draw_view_stop(self):
         glLoadIdentity()
+
+    def on_mouse_press(self,x,y,b,m):
+        if b==pyglet.window.mouse.LEFT:
+            self.mouse_status[0]=1
+
+    def on_mouse_release(self,x,y,b,m):
+        if b==pyglet.window.mouse.LEFT:
+            self.mouse_status[0]=0
+            self.mouse_status_drag[0][0]=0
+
+    def on_mouse_motion(self,x, y, dx, dy):
+        self.mouse_position_last.x=self.mouse_position.x
+        self.mouse_position_last.y=self.mouse_position.y
+        self.mouse_position.x=x
+        self.mouse_position.y=y
+        if dx==0 and dy==0:
+            self.mouse_status_drag[0][0] = 0
+
+    def on_mouse_drag(self,x, y, dx, dy, b, m):
+        if b==pyglet.window.mouse.LEFT:
+            self.mouse_status_drag[0][0] = 1
+            self.mouse_status_drag[0][1].set(x,y)
+            self.mouse_status_drag[0][2].set(dx,dy)
+
+    def reset_inputs(self):
+        self.mouse_status_drag[0][0] = 0
+
 
     def main_loop(self):
         acc = 0
@@ -57,7 +92,9 @@ class Game(pyglet.window.Window):
                 self._states[self._current].draw()
 
             self.flip()
+            self.reset_inputs()
             self.dispatch_events()
+
 
 
         pass

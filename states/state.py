@@ -3,6 +3,9 @@ class State:
         self.Game = g
         pass
 
+    def init(self):
+        pass
+
     def run(self, dt):
         pass
 
