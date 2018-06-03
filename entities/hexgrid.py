@@ -1,5 +1,6 @@
 import pyglet
 import entities.entity
+import entities.vector2d
 import utils
 import math
 from pyglet.gl import *
@@ -49,6 +50,9 @@ class Hex(entities.entity.Entity):
     def loop(self,dt):
         pass
 
+    def __del__(self):
+        self.poly.delete()
+
 
 class HexGrid(entities.entity.Entity):
     def __init__(self,g,x,y,s,w,h):
@@ -93,6 +97,26 @@ class HexGrid(entities.entity.Entity):
         else:
             return None
 
+    def pixel_to_hex(self,x,y):
+        q=((math.sqrt(3)/3*(x+self.position.x))-(1/3*(y+self.position.y)))/self.size
+        r=(2/3*(y+self.position.y))/self.size
+        z=-q-r
+
+        rq=round(q)
+        rr=round(r)
+        rz=round(z)
+
+        dq=abs(rq-q)
+        dr=abs(rr-r)
+        dz=abs(rz-z)
+
+        if dq>dr and dq>dz:
+            rq=-rr-rz
+        elif dr>dz:
+            rr=-rq-rz
+        
+        return entities.vector2d.Vector2D(rq,rr)
+
     def draw(self):
         for i in self._grid:
             mx=1.73*self.size
@@ -104,9 +128,7 @@ class HexGrid(entities.entity.Entity):
 
             self._grid[i].gen_hex(xx,yy)
 
-        glLineWidth(8)
         self._batch.draw()
-        glLineWidth(1)
 
     def loop(self,dt):
 

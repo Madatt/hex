@@ -8,7 +8,8 @@ class Level(states.state.State):
         super().__init__(g)
 
     def init(self):
-        self.grid=entities.hexgrid.HexGrid(self.Game,100,80,48,14,8)
+        self.grid=entities.hexgrid.HexGrid(self.Game,00,0,48,14,8)
+        self.grid2=entities.hexgrid.HexGrid(self.Game,100,100,48,1,2)
         self.Game.view.x=0
         self.Game.view.y=0
 
@@ -20,7 +21,8 @@ class Level(states.state.State):
             self.Game.view.x-=self.Game.mouse_status_drag[0][2].x
             self.Game.view.y-=self.Game.mouse_status_drag[0][2].y
 
-
+        ps=self.grid.pixel_to_hex(self.Game.mouse_position.x,self.Game.mouse_position.y)
+        self.grid.add_hex(ps.x,ps.y)
 
 
         pass
@@ -31,5 +33,6 @@ class Level(states.state.State):
         self.Game.draw_view_start()
         self.grid.draw()
         self.Game.draw_view_stop()
+        self.grid2.draw()
 
 

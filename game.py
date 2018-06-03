@@ -57,16 +57,21 @@ class Game(pyglet.window.Window):
     def on_mouse_motion(self,x, y, dx, dy):
         self.mouse_position_last.x=self.mouse_position.x
         self.mouse_position_last.y=self.mouse_position.y
-        self.mouse_position.x=x
-        self.mouse_position.y=y
+        self.mouse_position.x=x+self.view.x
+        self.mouse_position.y=y+self.view.y
         if dx==0 and dy==0:
             self.mouse_status_drag[0][0] = 0
 
     def on_mouse_drag(self,x, y, dx, dy, b, m):
         if b==pyglet.window.mouse.LEFT:
             self.mouse_status_drag[0][0] = 1
-            self.mouse_status_drag[0][1].set(x,y)
+            self.mouse_status_drag[0][1].set(x+self.view.x,y+self.view.y)
             self.mouse_status_drag[0][2].set(dx,dy)
+
+            self.mouse_position_last.x = self.mouse_position.x
+            self.mouse_position_last.y = self.mouse_position.y
+            self.mouse_position.x = x + self.view.x
+            self.mouse_position.y = y + self.view.y
 
     def reset_inputs(self):
         self.mouse_status_drag[0][0] = 0
